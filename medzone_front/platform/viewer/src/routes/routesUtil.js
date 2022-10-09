@@ -53,13 +53,13 @@ const AddPatient = asyncComponent(() =>
         '../connectedComponents/AddPatient.js'
     )
 );
-
-const AuthAdmin = asyncComponent(() =>
+const AddUser = asyncComponent(() =>
     import(
         /* webpackChunkName: "ViewerLocalFileData" */
-        '../connectedComponents/admin/AuthAdmin.js'
+        '../connectedComponents/AddUser.js'
     )
 );
+
 const AjouterRadiologue = asyncComponent(() =>
     import(
         /* webpackChunkName: "ViewerLocalFileData" */
@@ -135,9 +135,12 @@ const ROUTES_DEF = {
                 return isAuth
             },
         },
-        authAdmin: {
-            path: '/authadmin',
-            component: AuthAdmin,
+        AddUser: {
+            path: '/adduser',
+            component: AddUser,
+            condition: appConfig => {
+                return isAuth
+            },
         },
         AjouterRadiologue: {
             path: '/ajouterradiologue',

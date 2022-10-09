@@ -4,7 +4,6 @@ import { withTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Dropdown, AboutContent, withModal, Icon } from '@ohif/ui';
-import { UserPreferences } from './../UserPreferences';
 import OHIFLogo from '../OHIFLogo/OHIFLogo.js';
 import './Header.css';
 import logo from './logo.png'
@@ -15,16 +14,10 @@ function Header(props) {
     user,
     userManager,
     modal: { show },
-    useLargeLogo,
-    linkPath,
-    linkText,
-    location,
-    children,
   } = props;
 
   const [options, setOptions] = useState([]);
   const [optionsuser, setOptionsuser] = useState([]);
-  const hasLink = linkText && linkPath;
   const email = localStorage.getItem('email');
   let history = useHistory();
   useEffect(() => {
@@ -96,7 +89,7 @@ function Header(props) {
             {<Dropdown title={email} list={optionsuser} align="right" />}
 
           </span>
-          <NavLink to='/auth/signup' activeClassName="active" >
+          <NavLink to='/adduser' activeClassName="active" >
             <span className="research-use" >
               Add User
             </span>

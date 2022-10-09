@@ -7,20 +7,16 @@ import { Link } from 'react-router-dom';
 import Header from './Header';
 import { Icon } from '@ohif/ui';
 class Profil extends Component {
-
-
   constructor(props) {
     super(props);
-
     this.state = {
       nom: '',
       prenom: '',
       email: ''
     };
   }
-
   componentDidMount() {
-    axios.get('http://localhost:5000/admin/afficher/' + localStorage.getItem('idadmin'))
+    axios.get('http://localhost:5000/users/afficher/' + localStorage.getItem('idadmin'))
       .then(response => {
         this.setState({
           nom: response.data.nom,
@@ -40,7 +36,6 @@ class Profil extends Component {
           <div className="content-wrapper" style={{ width: "100%", justifyContent: 'center', display: 'flex' }}>
             <section className="form-wrapper " style={{ width: "50%", backgroundColor: '#ffffff' }}>
               <div className="container-fluid" >
-
                 <Link to={"/modifiercompteadmin/" + localStorage.getItem('idadmin')}>
                   <Icon name='edit' style={{ "fontSize": "30px", "float": "right", "position": "relative" }} />
                 </Link>

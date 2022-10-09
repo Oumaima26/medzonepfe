@@ -23,7 +23,7 @@ export default class ModifierRadiologue extends Component {
 
   componentDidMount() {
     console.log(this.props.match.params.id)
-    axios.get('http://localhost:5000/admin/afficher/' + this.props.match.params.id)
+    axios.get('http://localhost:5000/users/afficher/' + this.props.match.params.id)
       .then(response => {
         this.setState({
           nom: response.data.nom,
@@ -73,7 +73,7 @@ export default class ModifierRadiologue extends Component {
 
     console.log(radiologue);
 
-    axios.put('http://localhost:5000/admin/update/' + this.props.match.params.id, radiologue)
+    axios.put('http://localhost:5000/users/update/' + this.props.match.params.id, radiologue)
       .then(res => console.log(res.data));
 
     window.location = '/radiologue';

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import '../auth.css'
-import Header from './Header';
+import './auth.css'
 //import SweetAlert from 'react-bootstrap-sweetalert';
 import { withRouter } from "react-router-dom";
 class AjouterRadiologue extends Component {
@@ -75,13 +74,13 @@ class AjouterRadiologue extends Component {
       .then((res) => {
         if (res.data === 'added') {
           //this.successAlert();
-          window.location = '/radiologue';
+          window.location = '/';
         }
       }).catch(err => {
         console.log(err);
         if (err) {
           //this.erreurAlert();
-          window.location = '/ajouterclient';
+          window.location = '/adduser';
         }
       }
       );
@@ -99,7 +98,6 @@ class AjouterRadiologue extends Component {
   render() {
     return (
       <>
-        <Header />
         <div className="container" style={{ backgroundColor: '#0d0631' }}><div className="card-items">
           <div className="card-signup">
             <div className="block">

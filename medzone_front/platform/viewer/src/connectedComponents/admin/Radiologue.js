@@ -34,7 +34,7 @@ export default class RadiologueList extends Component {
   }
 
   componentDidMount() {
-    axios.get('http://localhost:5000/users/')
+    axios.get('http://localhost:5000/users/' + 'radiologue')
       .then(response => {
         this.setState({ radiologues: response.data })
       })
@@ -91,7 +91,7 @@ export default class RadiologueList extends Component {
       <div >
         <Header />
         <div className="wrapper">
-          <div className="content-wrapper" style={{ width: "100%", justifyContent: 'center', display: 'flex' }}>
+          <div className="content-wrapper" style={{ width: "80%", justifyContent: 'center', display: 'flex' }}>
             <section className="form-wrapper " style={{ width: "70%", backgroundColor: '#ffffff' }}>
               <div className="container-fluid" >
                 <Link to="/ajouterradiologue">

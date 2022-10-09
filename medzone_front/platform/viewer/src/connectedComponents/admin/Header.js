@@ -24,7 +24,7 @@ function Header(props) {
   const [options, setOptions] = useState([]);
   const [optionsuser, setOptionsuser] = useState([]);
   const hasLink = linkText && linkPath;
-  const email = localStorage.getItem('emailadmin');
+  const email = localStorage.getItem('admin');
   let history = useHistory();
   useEffect(() => {
     const optionsValue = [
@@ -71,9 +71,8 @@ function Header(props) {
 
   function logout() {
     localStorage.removeItem('emailadmin');
-    history.push('/authadmin')
+    history.push('/')
     window.location.reload(false);
-
   }
 
   return (
@@ -97,8 +96,12 @@ function Header(props) {
 
             </span>
           </a>
-          <a href='/authadmin'>
+          <a href='/'>
             <span className="research-use">
+              {
+
+                localStorage.removeItem('emailadmin')
+              }
               Logout
               <Icon name='power-off' />
             </span>

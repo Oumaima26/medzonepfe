@@ -7,7 +7,7 @@ const TOOLBAR_BUTTON_TYPES = {
 };
 
 const definitions = [
- {
+  {
     id: 'StackScroll',
     label: 'Stack Scroll',
     icon: 'bars',

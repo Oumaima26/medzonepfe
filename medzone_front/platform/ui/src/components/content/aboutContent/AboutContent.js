@@ -14,11 +14,6 @@ const AboutContent = () => {
   const itemsPreset = () => {
     return [
       {
-        name: t('MEDzone Repository URL'),
-        value: 'https://github.com/mongibr',
-        link: 'https://github.com/MongiBr/Front-Med',
-      },
-      {
         name: t('Created by'),
         value: 'Kadri Oumaima',
 
