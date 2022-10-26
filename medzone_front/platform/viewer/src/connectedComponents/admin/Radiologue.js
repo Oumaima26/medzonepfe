@@ -34,7 +34,7 @@ export default class RadiologueList extends Component {
   }
 
   componentDidMount() {
-    axios.get('http://localhost:5000/users/' + 'radiologue')
+    axios.get('https://meddicombackend.herokuapp.com/users/' + 'radiologue')
       .then(response => {
         this.setState({ radiologues: response.data })
       })
@@ -44,7 +44,7 @@ export default class RadiologueList extends Component {
   }
 
   deleteRadiologue(id) {
-    axios.delete('http://localhost:5000/users/supprimer/' + id)
+    axios.delete('https://meddicombackend.herokuapp.com/users/supprimer/' + id)
       .then(response => { console.log(response.data) });
 
     this.setState({

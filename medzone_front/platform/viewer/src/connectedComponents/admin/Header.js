@@ -4,10 +4,8 @@ import { withTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Dropdown, AboutContent, withModal, Icon } from '@ohif/ui';
-
 import logo from '../../components/Header/logo.png'
 import './Header.css';
-
 function Header(props) {
   const {
     t,
@@ -20,7 +18,6 @@ function Header(props) {
     location,
     children,
   } = props;
-
   const [options, setOptions] = useState([]);
   const [optionsuser, setOptionsuser] = useState([]);
   const hasLink = linkText && linkPath;
@@ -43,19 +40,14 @@ function Header(props) {
         onClick: () =>
           history.push('/add-patient')
       },
-
     ];
-
     const optionsValue2 = [
-
       {
         title: 'Logout',
-
         onClick: () =>
           logout()
       },
     ];
-
     if (user && userManager) {
       optionsValue.push({
         title: t('Logout'),
@@ -63,22 +55,17 @@ function Header(props) {
         onClick: () => userManager.signoutRedirect(),
       });
     }
-
     setOptions(optionsValue);
     setOptionsuser(optionsValue2);
   }, [setOptions, show, t, user, userManager]);
-
-
   function logout() {
     localStorage.removeItem('emailadmin');
     history.push('/')
     window.location.reload(false);
   }
-
   return (
     <>
       <div className={classNames('entry-heade')}>
-
         <div className="header-left-box">
           <div className='logo'>
             <img src={logo} width='180px' height='50px'></img>
@@ -93,13 +80,11 @@ function Header(props) {
               {
                 email
               }
-
             </span>
           </a>
           <a href='/'>
             <span className="research-use">
               {
-
                 localStorage.removeItem('emailadmin')
               }
               Logout

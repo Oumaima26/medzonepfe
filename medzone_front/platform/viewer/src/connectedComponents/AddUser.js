@@ -70,7 +70,7 @@ class AjouterRadiologue extends Component {
       password: this.state.password,
       role: 'radiologue',
     }
-    axios.post('http://localhost:5000/users/register', user)
+    axios.post('https://meddicombackend.herokuapp.com/users/register', user)
       .then((res) => {
         if (res.data === 'added') {
           //this.successAlert();

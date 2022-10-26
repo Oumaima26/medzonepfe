@@ -87,7 +87,6 @@ function Header(props) {
           </span>))}
           <span className="research-use" >
             {<Dropdown title={email} list={optionsuser} align="right" />}
-
           </span>
           <NavLink to='/adduser' activeClassName="active" >
             <span className="research-use" >

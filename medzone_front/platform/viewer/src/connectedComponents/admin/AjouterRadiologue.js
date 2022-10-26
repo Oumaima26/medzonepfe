@@ -1,128 +1,262 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
+import { Icon } from '@ohif/ui';
 import '../auth.css'
 import Header from './Header';
-//import SweetAlert from 'react-bootstrap-sweetalert';
 import { withRouter } from "react-router-dom";
-class AjouterRadiologue extends Component {
-  nextPath(path) {
-    this.props.history.push(path);
+function AjouterRadiologue() {
+  const nextPath = (path) => {
+    window.location = path;
   }
-  constructor(props) {
-    super(props);
-    /*.successAlert = this.successAlert.bind(this);
-    this.onCancel = this.onCancel.bind(this);
-    this.onConfirm = this.onConfirm.bind(this);
-    this.erreurAlert = this.erreurAlert.bind(this);*/
-    this.state = {
-      nom: '',
-      prenom: '',
-      email: '',
-      password: '',
-      role: '',
-      alert: null,
-    };
-  }
-  /*
-    successAlert() {
-      const getAlert = () => (
-        <SweetAlert
-          success
-          title="Good job!"
-          onConfirm={() => this.onConfirm}
-          onCancel={() => this.onCancel}>
-          You clicked the button!
-        </SweetAlert>
-      );
-
-      this.setState({
-        alert: getAlert()
-      });
-    }
-
-    onConfirm() {
-      window.location = '/radiologues';
-    }
-    onCancel() {
-      this.setState({
-        alert: null
-      });
-    }
-    erreurAlert() {
-      const getAlert = () => (
-        <SweetAlert
-          warning
-          cancelBtnBsStyle="default"
-          title="Vérifier votre saisie"
-          onConfirm={() => this.onCancel()}>
-        </SweetAlert>
-      );
-      this.setState({
-        alert: getAlert()
-      });
-    }
-  */
-  handleSubmit = (event) => {
+  const [passShow, setPassShow] = useState(false);
+  const [cpassShow, setCPassShow] = useState(false);
+  const [nom, setNom] = useState('');
+  const [prenom, setPrenom] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [cpassword, setCPassword] = useState('');
+  //error
+  const [errnom, setErrNom] = useState('');
+  const [errprenom, setErrPrenom] = useState('');
+  const [erremail, setErrEmail] = useState('');
+  const [alert, setAlert] = useState('');
+  const [errpassword, setErrPassword] = useState('');
+  const [errcpassword, setErrCPassword] = useState('');
+  const [success, setSuccess] = useState('');
+  const [error, setError] = useState(false);
+  const handleSubmit = (event) => {
     event.preventDefault()
-    const user = {
-      nom: this.state.nom,
-      prenom: this.state.prenom,
-      email: this.state.email,
-      password: this.state.password,
-      role: 'radiologue',
-    }
-    axios.post('http://localhost:5000/users/register', user)
-      .then((res) => {
-        if (res.data === 'added') {
-          //this.successAlert();
-          window.location = '/radiologue';
-        }
-      }).catch(err => {
-        console.log(err);
-        if (err) {
-          //this.erreurAlert();
-          window.location = '/ajouterclient';
-        }
+    if (validForm()) {
+      const user = {
+        nom: nom,
+        prenom: prenom,
+        email: email,
+        password: password,
+        role: 'radiologue',
       }
-      );
-    this.setState({
-      nom: '',
-      prenom: '',
-      email: '',
-      password: '',
-    })
+      axios.post('https://meddicombackend.herokuapp.com/users/register', user)
+        .then((res) => {
+          if (res.data === 'added') {
+            setSuccess("Added")
+            setError(true)
+            nextPath('/radiologue');
+          }
+        })
+      setPrenom('');
+      setEmail('');
+      setPassword('');
+      setCPassword('');
+    }
+    else {
+      setError(false)
+      console.log("Error")
+      nextPath('/ajouterradiologue');
+    }
   }
-  handleChange = (event) => {
-    event.preventDefault()
-    this.setState({ [event.target.name]: event.target.value });
+  const validForm = () => {
+    let formIsValid = true
+    setErrNom('');
+    setErrPrenom('');
+    setErrEmail('');
+    setErrPassword('');
+    setErrCPassword('');
+    setAlert('');
+    if (nom === "") {
+      formIsValid = false
+      setErrNom('Last name is required!')
+    }
+    if (prenom === "") {
+      formIsValid = false
+      setErrPrenom('First name is required!')
+    }
+    if (email === "") {
+      formIsValid = false
+      setErrEmail("Email is required!");
+    }
+    if (!email.includes("@")) {
+      formIsValid = false
+      setErrEmail("Includes @ in your email!");
+    }
+    if (password === "") {
+      formIsValid = false
+      setErrPassword("password is required!");
+    }
+    if (password.length < 6) {
+      formIsValid = false
+      setErrPassword("Password must be 6 char!");
+    }
+    if (cpassword === "") {
+      formIsValid = false
+      setErrCPassword("Confirm password is required!");
+    }
+    if (cpassword.length < 6) {
+      formIsValid = false
+      setErrCPassword("Confirm password must be 6 char!");
+    }
+    if (password !== cpassword) {
+      formIsValid = false
+      setErrCPassword("Password and Confirm password are not matching!");
+      setErrPassword("Password and Confirm password are not matching!");
+    }
+
+    if (nom === "") {
+      formIsValid = false
+      setAlert('Last name is required!')
+    } else if (prenom === "") {
+      formIsValid = false
+      setAlert('First name is required!')
+    } else if (email === "") {
+      formIsValid = false
+      setAlert("Email is required!");
+    } else if (!email.includes("@")) {
+      formIsValid = false
+      setAlert("Includes @ in your email!");
+    } else if (password === "") {
+      formIsValid = false
+      setAlert("password is required!");
+    } else
+      if (password.length < 6) {
+        formIsValid = false
+        setAlert("Password must be 6 char!");
+      } else if (cpassword === "") {
+        formIsValid = false
+        setAlert("Confirm password is required!");
+      } else if (cpassword.length < 6) {
+        formIsValid = false
+        setAlert("Confirm password must be 6 char!");
+      } else if (password !== cpassword) {
+        formIsValid = false
+        setAlert("Password and Confirm password are not matching!");
+      }
+    return formIsValid;
   }
-  render() {
-    return (
-      <>
-        <Header />
-        <div className="container" style={{ backgroundColor: '#0d0631' }}><div className="card-items">
-          <div className="card-signup">
-            <div className="block">
-              <div className="input-t">
-                <div className="top-login">
-                  <label className="text"><center>Add Radiologue</center></label>
+  return (
+    <>
+      <Header />
+      <div className="container" style={{ backgroundColor: '#0d0631' }}><div className="card-items">
+        <div className="card-signup">
+          <div className="block">
+            <div className="input-t">
+              <div className="top-login">
+                <label className="text"><center>Add Radiologue</center></label>
+              </div>
+              {
+                error
+                  ?
+                  <div class="alert alert-success" role="alert" >
+                    {success}
+                  </div>
+                  :
+
+                  <div class="alert alert-danger" role="alert" >
+                    {alert}
+                  </div>
+              }
+              <div className="content">
+                <input type="text"
+                  className="form__field"
+                  placeholder="First Name"
+                  name="nom"
+                  onChange={(event) => {
+                    setNom(event.target.value);
+                  }}
+                />
+
+                {
+                  errnom.length > 0 && <span style={{ color: 'red' }}>{errnom}</span>
+                }
+                <input
+                  type="text"
+                  className="form__field"
+                  placeholder="Last Name"
+                  name="prenom"
+                  onChange={(event) => {
+                    setPrenom(event.target.value);
+                  }}
+                />
+                {
+                  errprenom.length > 0 && <span style={{ color: 'red' }}>{errprenom}</span>
+                }
+                <input
+                  type="email"
+                  className="form__field"
+                  placeholder="Email"
+                  name="email"
+                  onChange={(event) => {
+                    setEmail(event.target.value);
+                  }}
+                />
+                {
+                  erremail.length > 0 && <span style={{ color: 'red' }}>{erremail}</span>
+                }
+                <div className="form_input">
+                  <div className="two">
+                    <input
+                      type={!passShow ? "password" : "text"}
+                      onChange={(event) => {
+                        setPassword(event.target.value);
+                      }}
+                      name="password"
+                      id="password"
+                      placeholder='Password'
+                    />
+                    <div
+                      className="showpass"
+                      onClick={() => setPassShow(!passShow)}>
+                      {!passShow ?
+                        <a>
+                          <Icon name='eye' style={{ width: "32px" }} />
+                        </a>
+                        :
+                        <a>
+                          <Icon name='eye-closed' style={{ width: "35px" }} />
+                        </a>
+                      }
+                    </div>
+                  </div>
                 </div>
-                <div className="content">
-                  <input type="text" className="form__field" placeholder="First Name" name="nom" onChange={this.handleChange}></input>
-                  <input type="text" className="form__field" placeholder="Last Name" name="prenom" onChange={this.handleChange}></input>
-                  <input type="email" className="form__field" placeholder="Email" name="email" onChange={this.handleChange}></input>
-                  <input type="password" className="form__field" placeholder="Password" name="password" onChange={this.handleChange}></input>
+                {
+                  errpassword.length > 0 && <span style={{ color: 'red' }}>{errpassword}</span>
+                }
+                <div className="form_input">
+                  <div className="two">
+                    <input
+                      type={!cpassShow ? "password" : "text"}
+                      onChange={(event) => {
+                        setCPassword(event.target.value);
+                      }}
+                      name="cpassword"
+                      id="cpassword"
+                      placeholder='Confirm Password'
+                    />
+                    <div
+                      className="showpass"
+                      onClick={() => setCPassShow(!cpassShow)}>
+                      {!cpassShow ?
+                        <a>
+                          <Icon name='eye' style={{ width: "32px" }} />
+                        </a>
+                        :
+                        <a>
+                          <Icon name='eye-closed' style={{ width: "35px" }} />
+                        </a>
+                      }
+                    </div>
+                  </div>
                 </div>
-                <div className="footer-login ">
-                  <button className='btn-first' onClick={this.handleSubmit} >Add radiologue</button>
-                </div>
+                {
+                  errcpassword.length > 0 && <span style={{ color: 'red' }}>{errcpassword}</span>
+                }
+              </div>
+              <div className="footer-login ">
+                <button className='btn-first' onClick={handleSubmit} >Add radiologue</button>
               </div>
             </div>
           </div>
         </div>
-        </div>
-      </>
-    )
-  }
+      </div>
+      </div>
+    </>
+  )
 }
 export default withRouter(AjouterRadiologue);

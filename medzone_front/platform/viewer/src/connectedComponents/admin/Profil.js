@@ -16,7 +16,7 @@ class Profil extends Component {
     };
   }
   componentDidMount() {
-    axios.get('http://localhost:5000/users/afficher/' + localStorage.getItem('idadmin'))
+    axios.get('https://meddicombackend.herokuapp.com/users/afficher/' + localStorage.getItem('idadmin'))
       .then(response => {
         this.setState({
           nom: response.data.nom,
